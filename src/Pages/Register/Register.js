@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/UserContext";
 import useTitle from "../../Hooks/useTitle";
 import signupImage from "../../Assets/images/signUp.webp";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const Register = () => {
   useTitle("Sign Up");
@@ -47,7 +48,7 @@ const Register = () => {
 
   return (
     <div>
-      <div className="hero py-10 lg:py-40">
+      <div className="hero py-10 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <div className="flex justify-center">
             <img src={signupImage} alt="sign up" className="w-52 md:w-96" />
@@ -120,6 +121,14 @@ const Register = () => {
                   <input type="submit" value="Login" className="btn" />
                 </div>
               </form>
+              <p className="text-sm text-center mt-2">
+                <span> Already have an account?</span>
+                <Link to="/login" className="text-primary mx-1">
+                  Please Log in
+                </Link>
+              </p>
+              <div className="divider">OR</div>
+              <SocialLogin></SocialLogin>
             </div>
           </div>
         </div>

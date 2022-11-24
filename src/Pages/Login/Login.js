@@ -3,8 +3,9 @@ import { AuthContext } from "../../Contexts/UserContext";
 import useTitle from "../../Hooks/useTitle";
 import loginImage from "../../Assets/images/login.webp";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const Login = () => {
   useTitle("Login");
@@ -35,12 +36,12 @@ const Login = () => {
 
   return (
     <div>
-      <div className="hero py-10 lg:py-40">
+      <div className="hero py-10 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <div className="flex justify-center">
             <img src={loginImage} alt="login" className="w-52 md:w-96" />
           </div>
-          <div className="card shadow-xl border-2 bg-base-100 mx-5 mt-5">
+          <div className="card shadow-xl border-2 bg-base-100 mx-5 mt-2">
             <div className="card-body md:w-96">
               <p className="text-center text-3xl md:text-4xl mb-2">Login</p>
               <p className="text-center text-sm text-red-500">{errorMessage}</p>
@@ -81,6 +82,14 @@ const Login = () => {
                   <input type="submit" value="Login" className="btn" />
                 </div>
               </form>
+              <p className="text-sm text-center mt-2">
+                <span> New to Laptop Bazar?</span>
+                <Link to="/register" className="text-primary mx-1">
+                  Create new accoount
+                </Link>
+              </p>
+              <div className="divider">OR</div>
+              <SocialLogin></SocialLogin>
             </div>
           </div>
         </div>
