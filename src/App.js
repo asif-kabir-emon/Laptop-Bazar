@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <div className="max-w-screen-xl">
+    <div className="max-w-screen-xl mx-auto">
       <RouterProvider router={routers}></RouterProvider>
       <Toaster />
     </div>

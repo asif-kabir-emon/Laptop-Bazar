@@ -1,8 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../Assets/laptop_logo.jpg";
+import { AuthContext } from "../../../Contexts/UserContext";
+import toast from "react-hot-toast";
 
 const NavBar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        toast.success("log out");
+        navigate("/", { replace: true });
+      })
+      .catch((error) => {
+        toast.error("log out problem");
+      });
+  };
+
   const navbarItems = (
     <>
       <li>
@@ -14,12 +30,25 @@ const NavBar = () => {
       <li>
         <Link to="/blogs">Blogs</Link>
       </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-      <li>
-        <Link to="/register">Sign Up</Link>
-      </li>
+      {user?.uid ? (
+        <>
+          <button
+            onClick={handleLogOut}
+            className="btn btn-sm btn-outline normal-case"
+          >
+            Sign Out
+          </button>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/register">Sign Up</Link>
+          </li>
+        </>
+      )}
     </>
   );
   return (
@@ -59,7 +88,9 @@ const NavBar = () => {
       </div>
       <div className="navbar-end">
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal p-0">{navbarItems}</ul>
+          <ul className="menu menu-horizontal p-0 items-center">
+            {navbarItems}
+          </ul>
         </div>
       </div>
     </div>

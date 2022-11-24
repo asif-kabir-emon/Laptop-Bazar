@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  updateCurrentUser,
+  updateProfile,
 } from "firebase/auth";
 import app from "../Firebase/firebase.config";
 
@@ -35,14 +35,14 @@ const UserContext = ({ children }) => {
     return signOut(auth);
   };
 
-  const register = (email, password) => {
+  const registerUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const updateUser = (userProfile) => {
     setLoading(true);
-    return updateCurrentUser(auth.currentUser, userProfile);
+    return updateProfile(auth.currentUser, userProfile);
   };
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const UserContext = ({ children }) => {
     epLogin,
     gLogin,
     logOut,
-    register,
+    registerUser,
     updateUser,
   };
   return (
