@@ -9,7 +9,7 @@ import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const Login = () => {
   useTitle("Login");
-  const { epLogin } = useContext(AuthContext);
+  const { setAccountType, epLogin } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,12 +25,26 @@ const Login = () => {
     epLogin(data.email, data.password)
       .then(() => {
         setErrorMessage("");
-        navigate(from, { replace: true });
-        toast.success("successfully login");
+        fetch(`http://localhost:4000/users/${data.email}`)
+          .then((res) => res.json())
+          .then((getData) => {
+            setAccountType(getData.account_type);
+          });
+        getToken(data.email);
       })
       .catch((error) => {
         setErrorMessage(error.message);
         toast.error("failed to login");
+      });
+  };
+
+  const getToken = (email) => {
+    fetch(`http://localhost:4000/jwt?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        localStorage.setItem("access_token", data.accessToken);
+        navigate(from, { replace: true });
+        toast.success("successfully login");
       });
   };
 

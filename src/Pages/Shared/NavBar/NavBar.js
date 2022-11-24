@@ -1,18 +1,17 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../../../Assets/laptop_logo.jpg";
 import { AuthContext } from "../../../Contexts/UserContext";
 import toast from "react-hot-toast";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const handleLogOut = () => {
     logOut()
       .then(() => {
         toast.success("log out");
-        navigate("/", { replace: true });
+        localStorage.setItem("access_token", "");
       })
       .catch((error) => {
         toast.error("log out problem");

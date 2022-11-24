@@ -9,7 +9,7 @@ import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const Register = () => {
   useTitle("Sign Up");
-  const { registerUser, updateUser } = useContext(AuthContext);
+  const { registerUser, updateUser, setAccountType } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,13 +21,19 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    const user = {
+      email: data.email,
+      name: data.name,
+      account_type: data.type,
+      isAdmin: false,
+    };
+
     registerUser(data.email, data.password)
       .then(() => {
         setErrorMessage("");
         updateUserInfo(data.name);
-        navigate(from, { replace: true });
-        toast.success("successfully register");
+        setAccountType(data.type);
+        creatUser(user);
       })
       .catch((error) => {
         setErrorMessage(error.message);
@@ -46,9 +52,37 @@ const Register = () => {
       });
   };
 
+  const creatUser = (user) => {
+    fetch(`http://localhost:4000/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          getToken(user.email);
+        }
+      });
+  };
+
+  const getToken = (email) => {
+    fetch(`http://localhost:4000/jwt?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          localStorage.setItem("access_token", data.accessToken);
+          navigate(from, { replace: true });
+          toast.success("successfully register");
+        }
+      });
+  };
+
   return (
     <div>
-      <div className="hero py-10 lg:py-32">
+      <div className="hero py-10 lg:py-18">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <div className="flex justify-center">
             <img src={signupImage} alt="sign up" className="w-52 md:w-96" />
@@ -73,6 +107,18 @@ const Register = () => {
                       Name is required to Register
                     </span>
                   )}
+                </div>
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text">Account Type</span>
+                  </label>
+                  <select
+                    {...register("type", { required: true })}
+                    className="input input-bordered w-full"
+                  >
+                    <option value="buyer">Buyer</option>
+                    <option value="seller">Seller</option>
+                  </select>
                 </div>
                 <div className="form-control w-full">
                   <label className="label">
@@ -118,7 +164,7 @@ const Register = () => {
                   )}
                 </div>
                 <div className="form-control mt-5">
-                  <input type="submit" value="Login" className="btn" />
+                  <input type="submit" value="Sign Up" className="btn" />
                 </div>
               </form>
               <p className="text-sm text-center mt-2">

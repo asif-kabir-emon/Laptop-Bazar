@@ -1,22 +1,54 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import UserContext, { AuthContext } from "../../../Contexts/UserContext";
+import { AuthContext } from "../../../Contexts/UserContext";
 import toast from "react-hot-toast";
 
 const SocialLogin = () => {
-  const { gLogin } = UserContext(AuthContext);
+  const { setAccountType, gLogin } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   let from = location.state?.state?.pathname || "/";
 
   const handleGoogleLogin = () => {
     gLogin()
-      .then(() => {
-        toast.success("successfully login");
-        navigate(from, { replace: true });
+      .then((result) => {
+        const user = result.user;
+        setAccountType("buyer");
+        creatUser(user.email, user.displayName);
       })
       .catch((error) => {
         toast.error(error.message);
+      });
+  };
+
+  const creatUser = (email, name) => {
+    const user = {
+      email: email,
+      name: name,
+      account_type: "buyer",
+      isAdmin: false,
+    };
+    fetch(`http://localhost:4000/userFindCreate`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        getToken(email);
+      });
+  };
+
+  const getToken = (email) => {
+    fetch(`http://localhost:4000/jwt?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        localStorage.setItem("access_token", data.accessToken);
+        navigate(from, { replace: true });
+        toast.success("successfully login");
       });
   };
 

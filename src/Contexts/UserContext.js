@@ -19,6 +19,7 @@ const googleProvider = new GoogleAuthProvider();
 const UserContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [accountType, setAccountType] = useState("");
 
   const epLogin = (email, password) => {
     setLoading(true);
@@ -58,6 +59,8 @@ const UserContext = ({ children }) => {
   const userInfo = {
     user,
     loading,
+    accountType,
+    setAccountType,
     epLogin,
     gLogin,
     logOut,
