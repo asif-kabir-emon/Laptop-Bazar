@@ -5,6 +5,7 @@ import ErrorPage from "../../Pages/Shared/ErrorPage/ErrorPage";
 import Login from "../../Pages/Login/Login";
 import Register from "../../Pages/Register/Register";
 import Blogs from "../../Pages/Blogs/Blogs";
+import Page404 from "../../Pages/Page404/Page404";
 
 export const routers = createBrowserRouter([
   {
@@ -29,5 +30,9 @@ export const routers = createBrowserRouter([
         element: <Register></Register>,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Page404></Page404>,
   },
 ]);

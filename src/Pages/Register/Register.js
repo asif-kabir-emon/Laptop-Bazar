@@ -47,10 +47,10 @@ const Register = () => {
 
   return (
     <div>
-      <div className="hero py-10 md:py-40">
+      <div className="hero py-10 lg:py-40">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <div className="flex justify-center">
-            <img src={signupImage} alt="login" className="w-52 md:w-96" />
+            <img src={signupImage} alt="sign up" className="w-52 md:w-96" />
           </div>
           <div className="card shadow-xl border-2 bg-base-100 mx-5 mt-5">
             <div className="card-body md:w-96">

@@ -35,7 +35,7 @@ const Login = () => {
 
   return (
     <div>
-      <div className="hero py-10 md:py-40">
+      <div className="hero py-10 lg:py-40">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <div className="flex justify-center">
             <img src={loginImage} alt="login" className="w-52 md:w-96" />
