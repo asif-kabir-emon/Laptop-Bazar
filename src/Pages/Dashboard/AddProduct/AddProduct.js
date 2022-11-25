@@ -30,43 +30,59 @@ const AddProduct = () => {
     return <LoadingSpinner></LoadingSpinner>;
   }
 
-  const onSubmit = (data) => {
-    const product = {
-      user_email: user?.email,
-      brand_name: data.brand_name,
-      product_model: data.product_model,
-      os: data.os,
-      display_size: data.display_size,
-      processor: data.processor,
-      graphics: data.graphics,
-      ram_space: data.ram_space,
-      storage_type: data.storage_type,
-      storage_space: data.storage_space,
-      purchase_duration: data.purchase_duration,
-      buying_price: data.buying_price,
-      selling_price: data.selling_price,
-      product_codition: data.product_codition,
-      mobile: data.mobile,
-      location: data.location,
-      description: data.description,
-      isAvailable: true,
-    };
-    console.log(product);
+  const imageHostKey = process.env.REACT_APP_imageHostKey;
 
-    fetch("http://localhost:4000/products", {
+  const onSubmit = (data) => {
+    const image = data.img[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+    fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${localStorage.getItem("access_token")}`,
-      },
-      body: JSON.stringify(product),
+      body: formData,
     })
       .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        if (data.acknowledged) {
-          toast.success("successfully added your product for selling");
-          navigate("/dashboard/myProducts", { replace: true });
+      .then((imgData) => {
+        if (imgData.success) {
+          const product = {
+            user_email: user?.email,
+            brand_name: data.brand_name,
+            product_model: data.product_model,
+            os: data.os,
+            display_size: data.display_size,
+            processor: data.processor,
+            graphics: data.graphics,
+            ram_space: data.ram_space,
+            storage_type: data.storage_type,
+            storage_space: data.storage_space,
+            purchase_duration: data.purchase_duration,
+            buying_price: data.buying_price,
+            selling_price: data.selling_price,
+            product_codition: data.product_codition,
+            mobile: data.mobile,
+            location: data.location,
+            description: data.description,
+            image: imgData.data.url,
+            isAvailable: true,
+          };
+          console.log(product);
+
+          fetch("http://localhost:4000/products", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `bearer ${localStorage.getItem("access_token")}`,
+            },
+            body: JSON.stringify(product),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              // console.log(data);
+              if (data.acknowledged) {
+                toast.success("successfully added your product for selling");
+                navigate("/dashboard/myProducts", { replace: true });
+              }
+            });
         }
       });
   };
@@ -283,6 +299,23 @@ const AddProduct = () => {
               <option value="good">Good</option>
               <option value="excellent">Excellent</option>
             </select>
+          </div>
+
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Product Photo</span>
+            </label>
+            <input
+              {...register("img", { required: true })}
+              type="file"
+              placeholder="Upload Doctor Photo"
+              className="file-input file-input-bordered w-full"
+            />
+            {errors.file && errors.file.type === "required" && (
+              <span className="text-xs text-red-500 my-2">
+                Please Select Your Image
+              </span>
+            )}
           </div>
 
           <div className="form-control w-full">
