@@ -10,13 +10,13 @@ const Footer = () => {
         <p className="ml-4 flex flex-col md:flex-row text-center md:text-left my-3">
           Laptop Bazar
           <br />
-          Providing reliable tech since 2012
+          Platform to sell and buy used laptop since 2012
         </p>
       </div>
       <div className="flex flex-col item-center">
         <div className="flex flex-col">
-          <span className="ml-4 md:ml-6 md:text-left text-2xl py-2 text-white">
-            Social
+          <span className="ml-2 md:ml-1 md:text-left text-2xl py-2 text-white">
+            Follow Us
           </span>
           <div className="flex">
             <Link className="mx-2">
