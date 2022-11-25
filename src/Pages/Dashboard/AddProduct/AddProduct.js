@@ -49,6 +49,7 @@ const AddProduct = () => {
       mobile: data.mobile,
       location: data.location,
       description: data.description,
+      isAvailable: true,
     };
     console.log(product);
 
