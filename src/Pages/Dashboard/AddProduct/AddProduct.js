@@ -63,6 +63,7 @@ const AddProduct = () => {
             location: data.location,
             description: data.description,
             image: imgData.data.url,
+            isAdertise: false,
             isAvailable: true,
           };
           console.log(product);

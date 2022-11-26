@@ -10,6 +10,7 @@ const MyProducts = () => {
   useTitle("My Product");
   const { user } = useContext(AuthContext);
   const [deleteProduct, setDeleteProduct] = useState(null);
+  const [advertiseProduct, setAdvertiseProduct] = useState(null);
   const {
     data: products = [],
     isLoading,
@@ -29,8 +30,12 @@ const MyProducts = () => {
     return <LoadingSpinner></LoadingSpinner>;
   }
 
-  const closeModel = () => {
+  const closeDeleteModal = () => {
     setDeleteProduct(null);
+  };
+
+  const closeAdvertiseModal = () => {
+    setAdvertiseProduct(null);
   };
 
   const handleDeleteProduct = (id) => {
@@ -45,6 +50,23 @@ const MyProducts = () => {
         // console.log(data);
         if (data.deletedCount > 0) {
           toast.success("Successfully Delete");
+          refetch();
+        }
+      });
+  };
+
+  const handleAdvertiseProduct = (id) => {
+    fetch(`http://localhost:4000/products/advertise/${id}`, {
+      method: "PATCH",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("access_token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          toast.success("Successfully Advertise");
           refetch();
         }
       });
@@ -85,12 +107,20 @@ const MyProducts = () => {
                   )}
                 </td>
                 <td>
-                  {product.isAvailable ? (
-                    <button className="btn btn-xs btn-outline btn-secondary rounded-lg normal-case">
+                  {product.isAvailable && product.isAdertise !== true ? (
+                    <label
+                      htmlFor="confirmation-modal"
+                      onClick={() => {
+                        setAdvertiseProduct(product);
+                      }}
+                      className="btn btn-xs btn-outline btn-secondary rounded-lg normal-case"
+                    >
                       Advertise
-                    </button>
+                    </label>
                   ) : (
-                    <span></span>
+                    <span className="bg-green-500 px-2 py-1 rounded-lg text-sm">
+                      Advertised
+                    </span>
                   )}
                 </td>
                 <td>
@@ -114,9 +144,18 @@ const MyProducts = () => {
           <ConfirmationModal
             title={`Are you sure you want to delete?`}
             message={`If you delete product named ${deleteProduct.product_model} (brand - ${deleteProduct.brand_name}), you cannot be undone`}
-            closeModel={closeModel}
+            Delete={closeDeleteModal}
             successAction={handleDeleteProduct}
             modalData={deleteProduct}
+          ></ConfirmationModal>
+        )}
+        {advertiseProduct && (
+          <ConfirmationModal
+            title={`Are you want to advertise your product?`}
+            message={``}
+            Delete={closeDeleteModal}
+            successAction={handleAdvertiseProduct}
+            modalData={advertiseProduct}
           ></ConfirmationModal>
         )}
       </div>
