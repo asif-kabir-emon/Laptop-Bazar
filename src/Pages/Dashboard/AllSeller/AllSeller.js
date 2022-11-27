@@ -4,11 +4,13 @@ import toast from "react-hot-toast";
 import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
 import useTitle from "../../../Hooks/useTitle";
 import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
+import verifiedIcon from "../../../Assets/icons/verified.png";
 
 const AllSeller = () => {
   useTitle("All Seller");
   const account_type = "seller";
   const [deleteUser, SetDeleteUser] = useState(null);
+  const [verifyUser, SetVerifyUser] = useState(null);
   const {
     data: sellers = [],
     isLoading,
@@ -35,6 +37,7 @@ const AllSeller = () => {
 
   const closeModel = () => {
     SetDeleteUser(null);
+    SetVerifyUser(null);
   };
 
   const handleDeleteUser = (id) => {
@@ -54,6 +57,23 @@ const AllSeller = () => {
       });
   };
 
+  const handleVerify = (id) => {
+    fetch(`http://localhost:4000/users/verifyUser/${id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("access_token")}`,
+      },
+    })
+      .then((req) => req.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          toast.success("Successfully make user verified");
+          refetch();
+        }
+      });
+  };
+
   return (
     <div className="m-4">
       <h2 className="text-3xl mb-5">All Seller</h2>
@@ -65,6 +85,7 @@ const AllSeller = () => {
                 <th></th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Verified</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -73,7 +94,26 @@ const AllSeller = () => {
                 <tr key={seller._id}>
                   <th>{index + 1}</th>
                   <td>{seller.name}</td>
-                  <td>{seller.email}</td>
+                  <td>{seller?.email}</td>
+                  <td>
+                    {seller?.isVerified ? (
+                      <img
+                        src={verifiedIcon}
+                        alt="verified"
+                        className="w-6 ml-4"
+                      />
+                    ) : (
+                      <label
+                        onClick={() => {
+                          SetVerifyUser(seller);
+                        }}
+                        htmlFor="confirmation-modal"
+                        className="btn btn-xs btn-outline btn-primary rounded-lg normal-case"
+                      >
+                        Verify Now
+                      </label>
+                    )}
+                  </td>
                   <td>
                     {
                       <label
@@ -98,6 +138,15 @@ const AllSeller = () => {
               closeModel={closeModel}
               successAction={handleDeleteUser}
               modalData={deleteUser}
+            ></ConfirmationModal>
+          )}
+          {verifyUser && (
+            <ConfirmationModal
+              title={`Do you verify User with email ${verifyUser.email}`}
+              message={``}
+              closeModel={closeModel}
+              successAction={handleVerify}
+              modalData={verifyUser}
             ></ConfirmationModal>
           )}
         </div>
