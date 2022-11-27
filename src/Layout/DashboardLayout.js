@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { AuthContext } from "../Contexts/UserContext";
 import NavBar from "../Pages/Shared/NavBar/NavBar";
 
 const DashboardLayout = () => {
+  const { accountType } = useContext(AuthContext);
   return (
     <div className="mx-auto min-h-screen bg-slate-100">
       <NavBar></NavBar>
@@ -22,21 +24,31 @@ const DashboardLayout = () => {
               className="drawer-overlay"
             ></label>
             <ul className="menu pl-4 w-60 bg-white hidden md:block text-base-content">
-              <li>
-                <Link to="/dashboard">My Orders</Link>
-              </li>
-              <li>
-                <Link to="/dashboard/myProducts">My Products</Link>
-              </li>
-              <li>
-                <Link to="/dashboard/addProduct">Add Product</Link>
-              </li>
-              <li>
-                <Link to="/dashboard/allSeller">All Sellers</Link>
-              </li>
-              <li>
-                <Link to="/dashboard/allBuyer">All Buyers</Link>
-              </li>
+              {accountType === "buyer" && (
+                <li>
+                  <Link to="/dashboard">My Orders</Link>
+                </li>
+              )}
+              {accountType === "seller" && (
+                <>
+                  <li>
+                    <Link to="/dashboard/myProducts">My Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/addProduct">Add Product</Link>
+                  </li>
+                </>
+              )}
+              {accountType === "admin" && (
+                <>
+                  <li>
+                    <Link to="/dashboard/allSeller">All Sellers</Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/allBuyer">All Buyers</Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

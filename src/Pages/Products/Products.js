@@ -9,7 +9,7 @@ const Products = () => {
   useTitle(`${data.name} Brand`);
 
   return (
-    <div className="my-10">
+    <div className="my-10 mx-7 md:mx-3">
       <h2 className="text-3xl font-semibold">Brand Name: {data.name} </h2>
       <h2 className="text-2xl my-2">Total Product: {products.length} </h2>
       <div className="flex justify-center">

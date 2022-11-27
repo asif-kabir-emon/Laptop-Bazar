@@ -95,7 +95,7 @@ const MyProducts = () => {
                 <td>{product.brand_name}</td>
                 <td>${product.selling_price}</td>
                 <td>
-                  {product.isAvailable ? (
+                  {product.isBooked === false ? (
                     <span className="bg-green-500 px-2 py-1 rounded-lg text-sm">
                       Available
                     </span>
@@ -106,7 +106,7 @@ const MyProducts = () => {
                   )}
                 </td>
                 <td>
-                  {product.isAvailable && product.isAdertise !== true ? (
+                  {product.isAdertise === false && product.isBooked === false && (
                     <label
                       htmlFor="confirmation-modal"
                       onClick={() => {
@@ -116,14 +116,17 @@ const MyProducts = () => {
                     >
                       Advertise
                     </label>
-                  ) : (
-                    <span className="bg-green-500 px-2 py-1 rounded-lg text-sm">
-                      Advertised
-                    </span>
                   )}
+                  {product.isAdertise === true &&
+                    product.isBooked === false && (
+                      <span className="bg-green-500 px-2 py-1 rounded-lg text-sm">
+                        Advertised
+                      </span>
+                    )}
+                  {product.isBooked === true && <span></span>}
                 </td>
                 <td>
-                  {product.isAvailable && (
+                  {product._id && (
                     <label
                       htmlFor="confirmation-modal"
                       onClick={() => {

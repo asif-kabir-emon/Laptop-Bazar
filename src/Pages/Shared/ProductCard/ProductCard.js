@@ -25,14 +25,14 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="my-10">
-      <div className="card card-compact w-80 bg-base-100 border-2 shadow-xl">
+    <div>
+      <div className="card card-compact bg-base-100 border-2 shadow-xl">
         <figure>
           <img src={product.image} alt={product.product_model} />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">
-            Model: {product.product_model}
+          <h2 className="card-title items-start">
+            <span>Model: {product.product_model}</span>
             {product.isBooked ? (
               <span className="text-xs ml-3 px-2 py-1 bg-red-700 text-white rounded-xl">
                 Booked

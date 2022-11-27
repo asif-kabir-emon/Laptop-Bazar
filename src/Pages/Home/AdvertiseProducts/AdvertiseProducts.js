@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
-import verifiedLogo from "../../../Assets/icons/verify.png";
 import BookingModal from "../../Shared/BookingModal/BookingModal";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
 
@@ -26,8 +25,8 @@ const AdvertiseProducts = () => {
 
   return (
     <div className="my-10">
-      <div className="flex justify-center md:justify-start">
-        <div className="grid lg:grid-3 gap-5">
+      <div className="flex justify-center mx-auto">
+        <div className="grid lg:grid-cols-3 gap-7">
           {products.map((product) => (
             <ProductCard key={product._id} product={product}></ProductCard>
           ))}

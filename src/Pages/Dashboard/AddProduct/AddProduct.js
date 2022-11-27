@@ -68,7 +68,6 @@ const AddProduct = () => {
             description: data.description,
             image: imgData.data.url,
             isAdertise: false,
-            isAvailable: true,
             isBooked: false,
           };
           console.log(product);

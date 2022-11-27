@@ -21,14 +21,15 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     epLogin(data.email, data.password)
       .then(() => {
         setErrorMessage("");
         fetch(`http://localhost:4000/users/${data.email}`)
           .then((res) => res.json())
           .then((getData) => {
-            setAccountType(getData.account_type);
+            // console.log(getData[0].account_type);
+            setAccountType(getData[0].account_type);
           });
         getToken(data.email);
       })

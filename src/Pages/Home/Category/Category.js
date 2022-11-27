@@ -28,7 +28,7 @@ const Category = () => {
       <div className="flex justify-center flex-wrap">
         <Link to={`/category/1`}>
           <button>
-            <div className="card card-compact w-52 border-2 mx-2 my-2">
+            <div className="card card-compact w-52 border-2 shadow-md mx-2 my-2">
               <div className="card-body">
                 <h2 className="text-3xl font-bold text-center">All</h2>
               </div>
