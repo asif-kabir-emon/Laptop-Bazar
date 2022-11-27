@@ -21,7 +21,9 @@ const AddProduct = () => {
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:4000/categories");
+      const res = await fetch(
+        "https://old-laptop-buy-sell-server.vercel.app/categories"
+      );
       const data = await res.json();
       return data;
     },
@@ -69,10 +71,11 @@ const AddProduct = () => {
             image: imgData.data.url,
             isAdertise: false,
             isBooked: false,
+            isSold: false,
           };
-          console.log(product);
+          // console.log(product);
 
-          fetch("http://localhost:4000/products", {
+          fetch("https://old-laptop-buy-sell-server.vercel.app/products", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

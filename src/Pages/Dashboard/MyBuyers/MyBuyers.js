@@ -11,11 +11,14 @@ const MyBuyers = () => {
   const { data: buyers = [], isLoading } = useQuery({
     queryKey: ["buyers"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:4000/find-buyers/${email}`, {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("access_token")}`,
-        },
-      });
+      const res = await fetch(
+        `https://old-laptop-buy-sell-server.vercel.app/find-buyers/${email}`,
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
       const data = await res.json();
       return data;
     },

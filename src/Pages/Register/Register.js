@@ -30,9 +30,9 @@ const Register = () => {
 
     registerUser(data.email, data.password)
       .then(() => {
+        setAccountType(data.type);
         setErrorMessage("");
         updateUserInfo(data.name);
-        setAccountType(data.type);
         creatUser(user);
       })
       .catch((error) => {
@@ -53,7 +53,7 @@ const Register = () => {
   };
 
   const creatUser = (user) => {
-    fetch(`http://localhost:4000/users`, {
+    fetch(`https://old-laptop-buy-sell-server.vercel.app/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const Register = () => {
   };
 
   const getToken = (email) => {
-    fetch(`http://localhost:4000/jwt?email=${email}`)
+    fetch(`https://old-laptop-buy-sell-server.vercel.app/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data) {

@@ -19,7 +19,7 @@ const AllSeller = () => {
     queryKey: ["sellers"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:4000/users/findUserByType/${account_type}`,
+        `https://old-laptop-buy-sell-server.vercel.app/users/findUserByType/${account_type}`,
         {
           headers: {
             authorization: `bearer ${localStorage.getItem("access_token")}`,
@@ -41,7 +41,7 @@ const AllSeller = () => {
   };
 
   const handleDeleteUser = (id) => {
-    fetch(`http://localhost:4000/users/${id}`, {
+    fetch(`https://old-laptop-buy-sell-server.vercel.app/users/${id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("access_token")}`,
@@ -58,12 +58,15 @@ const AllSeller = () => {
   };
 
   const handleVerify = (id) => {
-    fetch(`http://localhost:4000/users/verifyUser/${id}`, {
-      method: "PUT",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("access_token")}`,
-      },
-    })
+    fetch(
+      `https://old-laptop-buy-sell-server.vercel.app/users/verifyUser/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    )
       .then((req) => req.json())
       .then((data) => {
         console.log(data);

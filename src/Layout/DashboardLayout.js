@@ -25,9 +25,14 @@ const DashboardLayout = () => {
             ></label>
             <ul className="menu pl-4 w-60 bg-white hidden md:block text-base-content">
               {accountType === "buyer" && (
-                <li>
-                  <Link to="/dashboard/myOrders">My Orders</Link>
-                </li>
+                <>
+                  <li>
+                    <Link to="/dashboard/myOrders">My Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/myWishList">My Wish List</Link>
+                  </li>
+                </>
               )}
               {accountType === "seller" && (
                 <>

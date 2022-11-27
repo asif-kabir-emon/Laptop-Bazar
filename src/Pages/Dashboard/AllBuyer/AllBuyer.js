@@ -17,7 +17,7 @@ const AllBuyer = () => {
     queryKey: ["buyers"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:4000/users/findUserByType/${account_type}`,
+        `https://old-laptop-buy-sell-server.vercel.app/users/findUserByType/${account_type}`,
         {
           headers: {
             authorization: `bearer ${localStorage.getItem("access_token")}`,
@@ -38,7 +38,7 @@ const AllBuyer = () => {
   };
 
   const handleDeleteUser = (id) => {
-    fetch(`http://localhost:4000/users/${id}`, {
+    fetch(`https://old-laptop-buy-sell-server.vercel.app/users/${id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("access_token")}`,

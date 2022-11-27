@@ -17,6 +17,8 @@ import Products from "../../Pages/Products/Products";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Payment from "../../Pages/Dashboard/Payment/Payment";
 import MyBuyers from "../../Pages/Dashboard/MyBuyers/MyBuyers";
+import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
+import MyWishList from "../../Pages/Dashboard/MyWishList/MyWishList";
 
 export const routers = createBrowserRouter([
   {
@@ -40,7 +42,9 @@ export const routers = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: async ({ params }) =>
-          fetch(`http://localhost:4000/products/category/${params.id}`),
+          fetch(
+            `https://old-laptop-buy-sell-server.vercel.app/products/category/${params.id}`
+          ),
       },
     ],
   },
@@ -54,8 +58,16 @@ export const routers = createBrowserRouter([
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
+        path: "/dashboard",
+        element: <Dashboard></Dashboard>,
+      },
+      {
         path: "/dashboard/myOrders",
         element: <MyOrders></MyOrders>,
+      },
+      {
+        path: "/dashboard/myWishList",
+        element: <MyWishList></MyWishList>,
       },
       {
         path: "/dashboard/myProducts",
@@ -81,7 +93,9 @@ export const routers = createBrowserRouter([
         path: "/dashboard/payment/:id",
         element: <Payment></Payment>,
         loader: async ({ params }) =>
-          fetch(`http://localhost:4000/bookings/search_by_id/${params.id}`),
+          fetch(
+            `https://old-laptop-buy-sell-server.vercel.app/bookings/search_by_id/${params.id}`
+          ),
       },
     ],
   },

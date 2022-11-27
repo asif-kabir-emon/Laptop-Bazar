@@ -18,9 +18,12 @@ const MyProducts = () => {
   } = useQuery({
     queryKey: ["products", user?.email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:4000/products/${user?.email}`, {
-        authorization: `bearer ${localStorage.getItem("access_token")}`,
-      });
+      const res = await fetch(
+        `https://old-laptop-buy-sell-server.vercel.app/products/${user?.email}`,
+        {
+          authorization: `bearer ${localStorage.getItem("access_token")}`,
+        }
+      );
       const data = await res.json();
       return data;
     },
@@ -36,7 +39,7 @@ const MyProducts = () => {
   };
 
   const handleDeleteProduct = (id) => {
-    fetch(`http://localhost:4000/products/${id}`, {
+    fetch(`https://old-laptop-buy-sell-server.vercel.app/products/${id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("access_token")}`,
@@ -54,15 +57,18 @@ const MyProducts = () => {
   };
 
   const handleAdvertiseProduct = (id) => {
-    fetch(`http://localhost:4000/products/advertise/${id}`, {
-      method: "PATCH",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("access_token")}`,
-      },
-    })
+    fetch(
+      `https://old-laptop-buy-sell-server.vercel.app/products/advertise/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.modifiedCount > 0) {
           toast.success("Successfully Advertise");
           refetch();
@@ -102,7 +108,7 @@ const MyProducts = () => {
                   )}
                   {product.isBooked === true && product.isSold === false && (
                     <span className="bg-orange-500 px-2 py-1 rounded-lg text-sm">
-                      Book
+                      Booked
                     </span>
                   )}
                   {product.isBooked === true && product.isSold === true && (

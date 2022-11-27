@@ -27,7 +27,7 @@ const BookingModal = ({ title, message, closeModel, modalData }) => {
     };
     console.log(bookingInfo);
 
-    fetch(`http://localhost:4000/bookings`, {
+    fetch(`https://old-laptop-buy-sell-server.vercel.app/bookings`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

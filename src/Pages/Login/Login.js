@@ -25,7 +25,9 @@ const Login = () => {
     epLogin(data.email, data.password)
       .then(() => {
         setErrorMessage("");
-        fetch(`http://localhost:4000/users/${data.email}`)
+        fetch(
+          `https://old-laptop-buy-sell-server.vercel.app/users/${data.email}`
+        )
           .then((res) => res.json())
           .then((getData) => {
             // console.log(getData[0].account_type);
@@ -40,7 +42,7 @@ const Login = () => {
   };
 
   const getToken = (email) => {
-    fetch(`http://localhost:4000/jwt?email=${email}`)
+    fetch(`https://old-laptop-buy-sell-server.vercel.app/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         localStorage.setItem("access_token", data.accessToken);

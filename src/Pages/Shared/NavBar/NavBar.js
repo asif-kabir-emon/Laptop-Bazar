@@ -23,21 +23,26 @@ const NavBar = () => {
       <li>
         <Link to="/home">Home</Link>
       </li>
-      {user?.uid && accountType === "seller" && (
+      {user?.uid && (
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+      )}
+      {/* {accountType === "seller" && (
         <li>
           <Link to="/dashboard/myProducts">Dashboard</Link>
         </li>
       )}
-      {user?.uid && accountType === "buyer" && (
+      {accountType === "buyer" && (
         <li>
           <Link to="/dashboard/myOrders">Dashboard</Link>
         </li>
       )}
-      {user?.uid && accountType === "admin" && (
+      {accountType === "admin" && (
         <li>
           <Link to="/dashboard/allSeller">Dashboard</Link>
         </li>
-      )}
+      )} */}
       <li>
         <Link to="/blogs">Blogs</Link>
       </li>

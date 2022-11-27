@@ -13,14 +13,17 @@ const CheckoutForm = ({ booking }) => {
   const { _id, price, buyer_email, buyer_name } = booking;
 
   useEffect(() => {
-    fetch(`http://localhost:4000/create-payment-intent`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${localStorage.getItem("access_token")}`,
-      },
-      body: JSON.stringify(booking),
-    })
+    fetch(
+      `https://old-laptop-buy-sell-server.vercel.app/create-payment-intent`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${localStorage.getItem("access_token")}`,
+        },
+        body: JSON.stringify(booking),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setClientSecret(data.clientSecret);
@@ -73,7 +76,7 @@ const CheckoutForm = ({ booking }) => {
         email: buyer_email,
       };
 
-      fetch(`http://localhost:4000/payments`, {
+      fetch(`https://old-laptop-buy-sell-server.vercel.app/payments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

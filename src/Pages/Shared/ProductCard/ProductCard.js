@@ -10,7 +10,7 @@ const ProductCard = ({ product }) => {
     queryKey: ["user"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:4000/users/${product.user_email}`
+        `https://old-laptop-buy-sell-server.vercel.app/users/${product.user_email}`
       );
       const data = await res.json();
       return data;
@@ -28,18 +28,37 @@ const ProductCard = ({ product }) => {
     <div>
       <div className="card card-compact bg-base-100 border-2 shadow-xl">
         <figure>
-          <img src={product.image} alt={product.product_model} />
+          <img
+            src={product.image}
+            alt={product.product_model}
+            className="h-96"
+          />
         </figure>
         <div className="card-body">
           <h2 className="card-title items-start">
             <span>Model: {product.product_model}</span>
-            {product.isBooked ? (
+            {/* {product.isBooked ? (
               <span className="text-xs ml-3 px-2 py-1 bg-red-700 text-white rounded-xl">
                 Booked
               </span>
             ) : (
               <span className="text-xs ml-3 px-2 py-1 bg-green-700 text-white rounded-xl">
                 Available
+              </span>
+            )} */}
+            {product.isBooked === false && (
+              <span className="bg-green-500 px-2 py-1 text-xs text-white rounded-xl">
+                Available
+              </span>
+            )}
+            {product.isBooked === true && product.isSold === false && (
+              <span className="bg-orange-500 px-2 py-1 text-xs text-white rounded-xl">
+                Booked
+              </span>
+            )}
+            {product.isBooked === true && product.isSold === true && (
+              <span className="bg-red-500 px-2 py-1 text-xs text-white rounded-xl">
+                Sold
               </span>
             )}
           </h2>

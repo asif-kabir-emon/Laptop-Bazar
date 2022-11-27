@@ -28,7 +28,7 @@ const SocialLogin = () => {
       account_type: "buyer",
       isVerified: false,
     };
-    fetch(`http://localhost:4000/userFindCreate`, {
+    fetch(`https://old-laptop-buy-sell-server.vercel.app/userFindCreate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const SocialLogin = () => {
   };
 
   const getToken = (email) => {
-    fetch(`http://localhost:4000/jwt?email=${email}`)
+    fetch(`https://old-laptop-buy-sell-server.vercel.app/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
         localStorage.setItem("access_token", data.accessToken);

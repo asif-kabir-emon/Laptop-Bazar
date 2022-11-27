@@ -11,11 +11,14 @@ const MyOrders = () => {
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["orders"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:4000/bookings/${user?.email}`, {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("access_token")}`,
-        },
-      });
+      const res = await fetch(
+        `https://old-laptop-buy-sell-server.vercel.app/bookings/${user?.email}`,
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
       const data = await res.json();
       return data;
     },
