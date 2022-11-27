@@ -1,10 +1,12 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
+import useTitle from "../../Hooks/useTitle";
 import ProductCard from "../Shared/ProductCard/ProductCard";
 
 const Products = () => {
   const data = useLoaderData();
   const products = data.result;
+  useTitle(`${data.name} Brand`);
   return (
     <div className="my-10">
       <h2 className="text-3xl font-semibold">Brand Name: {data.name} </h2>

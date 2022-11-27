@@ -48,6 +48,7 @@ const MyProducts = () => {
         if (data.deletedCount > 0) {
           toast.success("Successfully Delete");
           refetch();
+          closeModel();
         }
       });
   };
@@ -65,6 +66,7 @@ const MyProducts = () => {
         if (data.modifiedCount > 0) {
           toast.success("Successfully Advertise");
           refetch();
+          closeModel();
         }
       });
   };
@@ -141,7 +143,7 @@ const MyProducts = () => {
           <ConfirmationModal
             title={`Are you sure you want to delete?`}
             message={`If you delete product named ${deleteProduct.product_model} (brand - ${deleteProduct.brand_name}), you cannot be undone`}
-            Delete={closeModel}
+            closeModel={closeModel}
             successAction={handleDeleteProduct}
             modalData={deleteProduct}
           ></ConfirmationModal>
@@ -150,7 +152,7 @@ const MyProducts = () => {
           <ConfirmationModal
             title={`Are you want to advertise your product?`}
             message={``}
-            Delete={closeModel}
+            closeModel={closeModel}
             successAction={handleAdvertiseProduct}
             modalData={advertiseProduct}
           ></ConfirmationModal>

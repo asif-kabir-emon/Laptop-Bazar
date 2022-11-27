@@ -7,7 +7,7 @@ const SocialLogin = () => {
   const { setAccountType, gLogin } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  let from = location.state?.state?.pathname || "/";
+  let from = location.state?.from?.pathname || "/";
 
   const handleGoogleLogin = () => {
     gLogin()

@@ -8,10 +8,14 @@ const PrivateRoute = ({ children }) => {
   const location = useLocation();
 
   if (loading) {
-    return <LoadingSpinner></LoadingSpinner>;
+    return (
+      <>
+        <LoadingSpinner></LoadingSpinner>
+      </>
+    );
   }
 
-  if (user && user?.uid) {
+  if (user && user.uid) {
     return children;
   }
 
