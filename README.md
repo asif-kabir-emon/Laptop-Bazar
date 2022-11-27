@@ -1,8 +1,8 @@
 # Laptop Bazar Website
 
-Live Website Link: 
+## Live Website Link: https://laptop-bazar-24d5e.web.app/
 
-## Available Scripts
+## Website Feature and Functionality
 - In this website, firebase authentication system is used for login and sign up user.
 - A seller easily can add a product to sell.
 - A seller of website can advertise his/her selling products.
