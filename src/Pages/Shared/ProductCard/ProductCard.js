@@ -7,7 +7,7 @@ import BookingModal from "../BookingModal/BookingModal";
 const ProductCard = ({ product }) => {
   const [bookingItem, setBookingItem] = useState(null);
   const { data: user = [], isLoading } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["user", product.user_email],
     queryFn: async () => {
       const res = await fetch(
         `https://old-laptop-buy-sell-server.vercel.app/users/${product.user_email}`
@@ -99,8 +99,10 @@ const ProductCard = ({ product }) => {
             <span>
               <b>Seller Name:</b> {product.seller_name}
             </span>
-            {user[0]?.isVerified && (
+            {user[0]?.isVerified ? (
               <img src={verifiedLogo} alt="verified" className="w-4 ml-1" />
+            ) : (
+              <span></span>
             )}
           </div>
           <div className="card-actions justify-center">
