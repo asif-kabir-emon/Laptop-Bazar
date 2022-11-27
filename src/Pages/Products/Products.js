@@ -19,6 +19,11 @@ const Products = () => {
           ))}
         </div>
       </div>
+      {products.length === 0 && (
+        <p className="text-center text-orange-700 text-2xl font-semibold mt-5 mb-16">
+          No product availabe of {data.name} brand
+        </p>
+      )}
     </div>
   );
 };

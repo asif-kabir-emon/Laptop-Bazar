@@ -23,9 +23,19 @@ const NavBar = () => {
       <li>
         <Link to="/home">Home</Link>
       </li>
-      {user?.uid && (
+      {user?.uid && accountType === "seller" && (
         <li>
-          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/dashboard/myProducts">Dashboard</Link>
+        </li>
+      )}
+      {user?.uid && accountType === "buyer" && (
+        <li>
+          <Link to="/dashboard/myOrders">Dashboard</Link>
+        </li>
+      )}
+      {user?.uid && accountType === "admin" && (
+        <li>
+          <Link to="/dashboard/allSeller">Dashboard</Link>
         </li>
       )}
       <li>
@@ -75,7 +85,7 @@ const NavBar = () => {
           <ul className="p-2 bg-white">
             {accountType === "buyer" && (
               <li>
-                <Link to="/dashboard">My Orders</Link>
+                <Link to="/dashboard/myOrders">My Orders</Link>
               </li>
             )}
             {accountType === "seller" && (

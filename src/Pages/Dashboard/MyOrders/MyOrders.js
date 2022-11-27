@@ -69,6 +69,11 @@ const MyOrders = () => {
             ))}
           </tbody>
         </table>
+        {orders.length === 0 && (
+          <p className="text-center text-3xl my-10 md:my-16">
+            No order Makes Yet
+          </p>
+        )}
       </div>
     </div>
   );

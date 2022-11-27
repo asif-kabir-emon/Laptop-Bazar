@@ -95,11 +95,17 @@ const MyProducts = () => {
                 <td>{product.brand_name}</td>
                 <td>${product.selling_price}</td>
                 <td>
-                  {product.isBooked === false ? (
+                  {product.isBooked === false && (
                     <span className="bg-green-500 px-2 py-1 rounded-lg text-sm">
                       Available
                     </span>
-                  ) : (
+                  )}
+                  {product.isBooked === true && product.isSold === false && (
+                    <span className="bg-orange-500 px-2 py-1 rounded-lg text-sm">
+                      Book
+                    </span>
+                  )}
+                  {product.isBooked === true && product.isSold === true && (
                     <span className="bg-red-500 px-2 py-1 rounded-lg text-sm">
                       Sold
                     </span>

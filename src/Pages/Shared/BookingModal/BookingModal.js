@@ -15,6 +15,7 @@ const BookingModal = ({ title, message, closeModel, modalData }) => {
     const bookingInfo = {
       buyer_name: user?.displayName,
       buyer_email: user?.email,
+      seller_email: modalData.user_email,
       product_image: modalData.image,
       product_id: modalData._id,
       product_name: modalData.product_model,

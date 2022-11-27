@@ -32,6 +32,11 @@ const AdvertiseProducts = () => {
           ))}
         </div>
       </div>
+      {products.length === 0 && (
+        <p className="text-center text-xl mt-5 mb-20">
+          No Advertise Product available
+        </p>
+      )}
       {bookingItem && (
         <BookingModal
           title={`Book ${bookingItem.product_model}`}

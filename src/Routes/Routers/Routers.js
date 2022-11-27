@@ -16,6 +16,7 @@ import AllBuyer from "../../Pages/Dashboard/AllBuyer/AllBuyer";
 import Products from "../../Pages/Products/Products";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Payment from "../../Pages/Dashboard/Payment/Payment";
+import MyBuyers from "../../Pages/Dashboard/MyBuyers/MyBuyers";
 
 export const routers = createBrowserRouter([
   {
@@ -53,12 +54,16 @@ export const routers = createBrowserRouter([
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: "/dashboard",
+        path: "/dashboard/myOrders",
         element: <MyOrders></MyOrders>,
       },
       {
         path: "/dashboard/myProducts",
         element: <MyProducts></MyProducts>,
+      },
+      {
+        path: "/dashboard/myBuyers",
+        element: <MyBuyers></MyBuyers>,
       },
       {
         path: "/dashboard/addProduct",
