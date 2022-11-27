@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import useTitle from "../../../Hooks/useTitle";
 import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Contexts/UserContext";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 const AddProduct = () => {
   useTitle("Add Product");
@@ -46,7 +47,10 @@ const AddProduct = () => {
         if (imgData.success) {
           const product = {
             user_email: user?.email,
-            brand_name: data.brand_name,
+            seller_name: user?.displayName,
+            posting_date: format(new Date(), "PP"),
+            brand_name: data.brand_name.split(" ")[0],
+            category_id: data.brand_name.split(" ")[1],
             product_model: data.product_model,
             os: data.os,
             display_size: data.display_size,
@@ -65,6 +69,7 @@ const AddProduct = () => {
             image: imgData.data.url,
             isAdertise: false,
             isAvailable: true,
+            isBooked: false,
           };
           console.log(product);
 
@@ -102,7 +107,10 @@ const AddProduct = () => {
               className="select select-primary w-full"
             >
               {categories.map((category) => (
-                <option key={category._id} value={category.name}>
+                <option
+                  key={category._id}
+                  value={`${category.name} ${category._id}`}
+                >
                   {category.name}
                 </option>
               ))}
@@ -348,7 +356,7 @@ const AddProduct = () => {
 
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text">Location</span>
+              <span className="label-text">Meeting Location</span>
             </label>
             <input
               {...register("location", { required: true, minLength: 6 })}

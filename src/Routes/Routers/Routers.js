@@ -13,6 +13,8 @@ import AddProduct from "../../Pages/Dashboard/AddProduct/AddProduct";
 import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
 import AllSeller from "../../Pages/Dashboard/AllSeller/AllSeller";
 import AllBuyer from "../../Pages/Dashboard/AllBuyer/AllBuyer";
+import Products from "../../Pages/Products/Products";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 export const routers = createBrowserRouter([
   {
@@ -27,6 +29,16 @@ export const routers = createBrowserRouter([
       {
         path: "/home",
         element: <Home></Home>,
+      },
+      {
+        path: "/category/:id",
+        element: (
+          <PrivateRoute>
+            <Products></Products>
+          </PrivateRoute>
+        ),
+        loader: async ({ params }) =>
+          fetch(`http://localhost:4000/products/category/${params.id}`),
       },
     ],
   },

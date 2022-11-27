@@ -26,6 +26,7 @@ const Register = () => {
       name: data.name,
       account_type: data.type,
       isAdmin: false,
+      isVerified: false,
     };
 
     registerUser(data.email, data.password)

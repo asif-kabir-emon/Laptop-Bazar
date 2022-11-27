@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { Link } from "react-router-dom";
 import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
 
 const Category = () => {
@@ -25,22 +26,27 @@ const Category = () => {
         Please Choice a Laptop Brand to see.
       </p>
       <div className="flex justify-center flex-wrap">
-        <div className="card card-compact w-52 border-2 mx-2 my-2">
-          <div className="card-body">
-            <h2 className="text-3xl font-bold text-center">All</h2>
-          </div>
-        </div>
-        {categories.map((category) => (
-          <div
-            key={category._id}
-            className="card card-compact w-52 border-2 mx-2 my-2"
-          >
-            <div className="card-body">
-              <h2 className="text-3xl font-bold text-center">
-                {category.name}
-              </h2>
+        <Link to={`/category/1`}>
+          <button>
+            <div className="card card-compact w-52 border-2 mx-2 my-2">
+              <div className="card-body">
+                <h2 className="text-3xl font-bold text-center">All</h2>
+              </div>
             </div>
-          </div>
+          </button>
+        </Link>
+        {categories.map((category) => (
+          <Link to={`/category/${category._id}`} key={category._id}>
+            <button>
+              <div className="card card-compact w-52 border-2 shadow-md mx-2 my-2">
+                <div className="card-body">
+                  <h2 className="text-3xl font-bold text-center">
+                    {category.name}
+                  </h2>
+                </div>
+              </div>
+            </button>
+          </Link>
         ))}
       </div>
     </div>

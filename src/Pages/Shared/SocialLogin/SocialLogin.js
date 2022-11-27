@@ -27,6 +27,7 @@ const SocialLogin = () => {
       name: name,
       account_type: "buyer",
       isAdmin: false,
+      isVerified: false,
     };
     fetch(`http://localhost:4000/userFindCreate`, {
       method: "POST",
