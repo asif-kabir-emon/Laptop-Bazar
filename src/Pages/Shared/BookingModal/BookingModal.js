@@ -15,12 +15,14 @@ const BookingModal = ({ title, message, closeModel, modalData }) => {
     const bookingInfo = {
       buyer_name: user?.displayName,
       buyer_email: user?.email,
+      product_image: modalData.image,
       product_id: modalData._id,
       product_name: modalData.product_model,
       product_brand: modalData.brand_name,
       price: modalData.selling_price,
       mobile: data.mobile,
       meeting_place: data.meeting_place,
+      isPaid: false,
     };
     console.log(bookingInfo);
 

@@ -25,7 +25,6 @@ const Register = () => {
       email: data.email,
       name: data.name,
       account_type: data.type,
-      isAdmin: false,
       isVerified: false,
     };
 

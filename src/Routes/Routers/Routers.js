@@ -15,6 +15,7 @@ import AllSeller from "../../Pages/Dashboard/AllSeller/AllSeller";
 import AllBuyer from "../../Pages/Dashboard/AllBuyer/AllBuyer";
 import Products from "../../Pages/Products/Products";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Payment from "../../Pages/Dashboard/Payment/Payment";
 
 export const routers = createBrowserRouter([
   {
@@ -66,6 +67,12 @@ export const routers = createBrowserRouter([
       {
         path: "/dashboard/allBuyer",
         element: <AllBuyer></AllBuyer>,
+      },
+      {
+        path: "/dashboard/payment/:id",
+        element: <Payment></Payment>,
+        loader: async ({ params }) =>
+          fetch(`http://localhost:4000/bookings/search_by_id/${params.id}`),
       },
     ],
   },

@@ -31,7 +31,18 @@ const ProductCard = ({ product }) => {
           <img src={product.image} alt={product.product_model} />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">Model: {product.product_model}</h2>
+          <h2 className="card-title">
+            Model: {product.product_model}
+            {product.isBooked ? (
+              <span className="text-xs ml-3 px-2 py-1 bg-red-700 text-white rounded-xl">
+                Booked
+              </span>
+            ) : (
+              <span className="text-xs ml-3 px-2 py-1 bg-green-700 text-white rounded-xl">
+                Available
+              </span>
+            )}
+          </h2>
           <p className="text-lg">
             <b>Brand:</b> {product.brand_name}
           </p>
@@ -79,7 +90,9 @@ const ProductCard = ({ product }) => {
               onClick={() => {
                 setBookingItem(product);
               }}
-              className="btn btn-md normal-case my-5 px-10"
+              className={`btn btn-md normal-case my-5 px-10 ${
+                product.isBooked && "btn-disabled "
+              }`}
             >
               Book Now
             </label>
