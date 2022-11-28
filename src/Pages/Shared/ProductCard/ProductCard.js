@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import verifiedLogo from "../../../Assets/icons/verify.png";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
@@ -6,16 +6,18 @@ import BookingModal from "../BookingModal/BookingModal";
 import reportIcon from "../../../Assets/icons/sad-face.png";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../../Contexts/UserContext";
 
 const ProductCard = ({ product }) => {
+  const { user } = useContext(AuthContext);
   const [bookingItem, setBookingItem] = useState(null);
   const [reportItem, setReportItem] = useState(null);
   const {
-    data: user = [],
+    data: users = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["user", product.user_email],
+    queryKey: ["users", product.user_email],
     queryFn: async () => {
       const res = await fetch(
         `https://old-laptop-buy-sell-server.vercel.app/users/${product.user_email}`
@@ -34,22 +36,31 @@ const ProductCard = ({ product }) => {
   };
 
   const handleReportProduct = (id) => {
-    const reportedProduct = {};
-    // fetch(`https://old-laptop-buy-sell-server.vercel.app/products/${id}`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     authorization: `bearer ${localStorage.getItem("access_token")}`,
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     // console.log(data);
-    //     if (data.deletedCount > 0) {
-    //       toast.success("successfully reported");
-    //       refetch();
-    //       closeModal();
-    //     }
-    //   });
+    const rp = {
+      product_id: id,
+      reporter_email: user?.email,
+    };
+    console.log(rp);
+
+    fetch(`https://old-laptop-buy-sell-server.vercel.app/reports`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${localStorage.getItem("access_token")}`,
+      },
+      body: JSON.stringify(rp),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          toast.success("successfully reported");
+          refetch();
+          closeModal();
+        } else if (data.result) {
+          toast(data.result);
+        }
+      });
   };
 
   return (
@@ -127,7 +138,7 @@ const ProductCard = ({ product }) => {
             <span>
               <b>Seller Name:</b> {product.seller_name}
             </span>
-            {user[0]?.isVerified ? (
+            {users[0]?.isVerified ? (
               <img src={verifiedLogo} alt="verified" className="w-4 ml-1" />
             ) : (
               <span></span>

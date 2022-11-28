@@ -2,22 +2,29 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
 import useTitle from "../../../Hooks/useTitle";
+import ReportedItemOne from "./ReportedItemOne";
 
 const ReportedItem = () => {
   useTitle("Reported Items");
 
-  //   const { data: reportedProduct, isLoading } = useQuery({
-  //     queryKey: ["reportedProduct"],
-  //     queryFn: async () => {
-  //       const res = await fetch(``);
-  //       const data = await res.json();
-  //       return data;
-  //     },
-  //   });
+  const {
+    data: reportedProduct,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["reportedProduct"],
+    queryFn: async () => {
+      const res = await fetch(
+        `https://old-laptop-buy-sell-server.vercel.app/reports`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
 
-  //   if (isLoading) {
-  //     return <LoadingSpinner></LoadingSpinner>;
-  //   }
+  if (isLoading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
 
   return (
     <div className="m-4">
@@ -30,22 +37,18 @@ const ReportedItem = () => {
                 <th></th>
                 <th>Product</th>
                 <th>Name</th>
-                <th>Brand</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th>1</th>
-                <td>Cy Ganderton</td>
-                <td>Quality Control Specialist</td>
-                <td>Blue</td>
-                <td>
-                  <label className="btn btn-xs btn-error text-white normal-case">
-                    Delete Item
-                  </label>
-                </td>
-              </tr>
+              {reportedProduct.map((product, index) => (
+                <ReportedItemOne
+                  key={product._id}
+                  reportItem={product}
+                  index={index}
+                  refetch={refetch}
+                ></ReportedItemOne>
+              ))}
             </tbody>
           </table>
         </div>
