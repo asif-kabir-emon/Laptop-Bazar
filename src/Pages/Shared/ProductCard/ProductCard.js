@@ -3,10 +3,18 @@ import verifiedLogo from "../../../Assets/icons/verify.png";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../Components/LoadingSpinner/LoadingSpinner";
 import BookingModal from "../BookingModal/BookingModal";
+import reportIcon from "../../../Assets/icons/sad-face.png";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
+import toast from "react-hot-toast";
 
 const ProductCard = ({ product }) => {
   const [bookingItem, setBookingItem] = useState(null);
-  const { data: user = [], isLoading } = useQuery({
+  const [reportItem, setReportItem] = useState(null);
+  const {
+    data: user = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["user", product.user_email],
     queryFn: async () => {
       const res = await fetch(
@@ -22,6 +30,26 @@ const ProductCard = ({ product }) => {
 
   const closeModal = () => {
     setBookingItem(null);
+    setReportItem(null);
+  };
+
+  const handleReportProduct = (id) => {
+    const reportedProduct = {};
+    // fetch(`https://old-laptop-buy-sell-server.vercel.app/products/${id}`, {
+    //   method: "DELETE",
+    //   headers: {
+    //     authorization: `bearer ${localStorage.getItem("access_token")}`,
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     // console.log(data);
+    //     if (data.deletedCount > 0) {
+    //       toast.success("successfully reported");
+    //       refetch();
+    //       closeModal();
+    //     }
+    //   });
   };
 
   return (
@@ -117,6 +145,15 @@ const ProductCard = ({ product }) => {
             >
               Book Now
             </label>
+            <label
+              htmlFor="confirmation-modal"
+              onClick={() => {
+                setReportItem(product);
+              }}
+              className="btn bg-white hover:bg-red-400 btn-md normal-case my-5"
+            >
+              <img src={reportIcon} alt="" className="w-6" />
+            </label>
           </div>
         </div>
       </div>
@@ -127,6 +164,15 @@ const ProductCard = ({ product }) => {
           closeModel={closeModal}
           modalData={bookingItem}
         ></BookingModal>
+      )}
+      {reportItem && (
+        <ConfirmationModal
+          title={`Are you sure report about this product`}
+          message={``}
+          closeModel={closeModal}
+          successAction={handleReportProduct}
+          modalData={reportItem}
+        ></ConfirmationModal>
       )}
     </div>
   );

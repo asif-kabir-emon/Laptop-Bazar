@@ -114,6 +114,9 @@ const NavBar = () => {
                 <li>
                   <Link to="/dashboard/allBuyer">All Buyers</Link>
                 </li>
+                <li>
+                  <Link to="/dashboard/reportedItem">Reported Items</Link>
+                </li>
               </>
             )}
           </ul>

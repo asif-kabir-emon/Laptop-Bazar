@@ -29,9 +29,6 @@ const DashboardLayout = () => {
                   <li>
                     <Link to="/dashboard/myOrders">My Orders</Link>
                   </li>
-                  <li>
-                    <Link to="/dashboard/myWishList">My Wish List</Link>
-                  </li>
                 </>
               )}
               {accountType === "seller" && (
@@ -54,6 +51,9 @@ const DashboardLayout = () => {
                   </li>
                   <li>
                     <Link to="/dashboard/allBuyer">All Buyers</Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/reportedItem">Reported Items</Link>
                   </li>
                 </>
               )}
