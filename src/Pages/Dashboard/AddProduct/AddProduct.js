@@ -358,7 +358,7 @@ const AddProduct = () => {
 
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text">Meeting Location</span>
+              <span className="label-text">Location</span>
             </label>
             <input
               {...register("location", { required: true, minLength: 6 })}
